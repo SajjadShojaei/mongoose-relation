@@ -35,6 +35,8 @@ RUN npm install --only=production
 
 COPY . .
 
+COPY --from=development /app/dist ./dist
+
 ENV PORT 4000
 
 EXPOSE 4000

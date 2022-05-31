@@ -5,5 +5,5 @@ export class UserDto {
     @ApiProperty()
     name: string;
     @ApiProperty()
-    address: string;
+    address: object;
 }

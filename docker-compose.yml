@@ -23,6 +23,29 @@ services:
             - MONGO_DB=$MONGO_DB
         networks:
             - app-network
+    prod:
+        container_name: nestjs_api_mongodb_sample_prod
+        image: nestjs_api_mongodb_sample_prod:1.0.14
+        build:
+            context: .
+            target: production
+            dockerfile: Dockerfile
+        env_file: .env
+        ports:
+            - "7000:7000"
+        volumes:
+            - .:/app
+        restart: unless-stopped
+        depends_on:
+            - mongodb
+        environment:
+            - MONGO_USERNAME=$MONGO_USERNAME
+            - MONGO_PASSWORD=$MONGO_PASSWORD
+            - MONGO_HOSTNAME=mongodb
+            - MONGO_PORT=$MONGO_PORT
+            - MONGO_DB=$MONGO_DB
+        networks:
+            - app-network
     
     mongodb:
         image: mongo:latest

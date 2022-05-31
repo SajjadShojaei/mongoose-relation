@@ -9,7 +9,7 @@ services:
             dockerfile: Dockerfile
         env_file: .env
         ports:
-            - "4000:4000"
+            - "7000:7000"
         volumes:
             - .:/app
         restart: unless-stopped

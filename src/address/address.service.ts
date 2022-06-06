@@ -11,6 +11,7 @@ export class AddressService {
         @InjectModel(Address.name) private readonly addModel: Model<AddressDocument>,
     ){}
     
+    // create a new address
     async createAdd (createAddDto: AddressDto): Promise<Address> {
         return await new this.addModel({
             ...createAddDto

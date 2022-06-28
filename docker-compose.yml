@@ -14,11 +14,12 @@ services:
             - .:/app
         restart: unless-stopped
         depends_on:
-            - mongo
+            - mongo1
+            - mongo2
         environment:
             - MONGO_USERNAME=$MONGO_USERNAME
             - MONGO_PASSWORD=$MONGO_PASSWORD
-            - MONGO_HOSTNAME=mongo
+            - MONGO_HOSTNAME=mongo1
             - MONGO_PORT=$MONGO_PORT
             - MONGO_DB=$MONGO_DB
         networks:
@@ -37,11 +38,12 @@ services:
             - .:/app
         restart: unless-stopped
         depends_on:
-            - mongo
+            - mongo1
+            - mongo2
         environment:
             - MONGO_USERNAME=$MONGO_USERNAME
             - MONGO_PASSWORD=$MONGO_PASSWORD
-            - MONGO_HOSTNAME=mongo
+            - MONGO_HOSTNAME=mongo1
             - MONGO_PORT=$MONGO_PORT
             - MONGO_DB=$MONGO_DB
         networks:

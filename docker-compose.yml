@@ -59,7 +59,7 @@ services:
           - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
         command: --port 27021
         ports:
-          - 27021:27021
+          - 27024:27021
         expose:
           - "27021"
         entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all"]  

@@ -18,7 +18,7 @@ services:
         environment:
             - MONGO_USERNAME=$MONGO_USERNAME
             - MONGO_PASSWORD=$MONGO_PASSWORD
-            - MONGO_HOSTNAME=mongodb
+            - MONGO_HOSTNAME=mongo
             - MONGO_PORT=$MONGO_PORT
             - MONGO_DB=$MONGO_DB
         networks:
@@ -41,13 +41,13 @@ services:
         environment:
             - MONGO_USERNAME=$MONGO_USERNAME
             - MONGO_PASSWORD=$MONGO_PASSWORD
-            - MONGO_HOSTNAME=mongodb
+            - MONGO_HOSTNAME=mongo
             - MONGO_PORT=$MONGO_PORT
             - MONGO_DB=$MONGO_DB
         networks:
             - app-network
     
-    mongodb:
+    mongo:
         image: mongo:latest
         restart: unless-stopped
         container_name: mongo

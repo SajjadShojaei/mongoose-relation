@@ -47,10 +47,10 @@ services:
         networks:
             - app-network
     
-    mongo:
+    mongo1:
         image: mongo:latest
         restart: unless-stopped
-        container_name: mongo
+        container_name: mongo1
         env_file: .env
         environment:
           - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
@@ -60,11 +60,34 @@ services:
           - 27021:27021
         expose:
           - "27021"
+        entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all"]  
         volumes:
-          - ./data/db:/data/db
+          - mongodata1:/data/db
+          - ./rs-init.sh:/scripts/rs-init.sh
+        networks:
+          - app-network
+    mongo2:
+        image: mongo:latest
+        restart: unless-stopped
+        container_name: mongo2
+        env_file: .env
+        environment:
+          - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+          - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+        command: --port 27021
+        ports:
+          - 27023:27021
+        expose:
+          - "27021"
+        entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all"]  
+        volumes:
+          - mongodata2:/data/db
         networks:
           - app-network
 
+volumes:
+    mongodata1:
+    mongodata2:
 
 networks:
   app-network:

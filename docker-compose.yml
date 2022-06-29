@@ -49,7 +49,7 @@ services:
         networks:
             - app-network
     
-    mongo_one:
+    mongo1:
         image: mongo:latest
         command: mongod --replSet my-mongo-set
         restart: unless-stopped
@@ -67,7 +67,7 @@ services:
           - ./rs-init.sh:/scripts/rs-init.sh
         networks:
           - app-network
-    mongo_two:
+    mongo2:
         image: mongo:latest
         command: mongod --replSet my-mongo-set
         restart: unless-stopped

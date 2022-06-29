@@ -14,8 +14,8 @@ services:
             - .:/app
         restart: unless-stopped
         depends_on:
-            - mongo1
-            - mongo2
+            - mongo_one
+            - mongo_two
         environment:
             - MONGO_USERNAME=$MONGO_USERNAME
             - MONGO_PASSWORD=$MONGO_PASSWORD
@@ -38,8 +38,8 @@ services:
             - .:/app
         restart: unless-stopped
         depends_on:
-            - mongo1
-            - mongo2
+            - mongo_one
+            - mongo_two
         environment:
             - MONGO_USERNAME=$MONGO_USERNAME
             - MONGO_PASSWORD=$MONGO_PASSWORD
@@ -49,7 +49,7 @@ services:
         networks:
             - app-network
     
-    mongo1:
+    mongo_one:
         image: mongo:latest
         command: mongod --replSet my-mongo-set
         restart: unless-stopped
@@ -67,7 +67,7 @@ services:
           - ./rs-init.sh:/scripts/rs-init.sh
         networks:
           - app-network
-    mongo2:
+    mongo_two:
         image: mongo:latest
         command: mongod --replSet my-mongo-set
         restart: unless-stopped

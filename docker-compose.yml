@@ -14,12 +14,11 @@ services:
             - .:/app
         restart: unless-stopped
         depends_on:
-            - mongo1
-            - mongo2
+            - mongodb
         environment:
             - MONGO_USERNAME=$MONGO_USERNAME
             - MONGO_PASSWORD=$MONGO_PASSWORD
-            - MONGO_HOSTNAME=mongo1
+            - MONGO_HOSTNAME=mongodb
             - MONGO_PORT=$MONGO_PORT
             - MONGO_DB=$MONGO_DB
         networks:
@@ -38,59 +37,33 @@ services:
             - .:/app
         restart: unless-stopped
         depends_on:
-            - mongo1
-            - mongo2
+            - mongodb
         environment:
             - MONGO_USERNAME=$MONGO_USERNAME
             - MONGO_PASSWORD=$MONGO_PASSWORD
-            - MONGO_HOSTNAME=mongo1
+            - MONGO_HOSTNAME=mongodb
             - MONGO_PORT=$MONGO_PORT
             - MONGO_DB=$MONGO_DB
         networks:
             - app-network
-    
-    mongo1:
+
+    mongodb:
         image: mongo:latest
         restart: unless-stopped
-        container_name: mongo1
+        container_name: mongodb
         env_file: .env
         environment:
           - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
           - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
         command: --port 27021
         ports:
-          - 27024:27021
+          - 27021:27021
         expose:
           - "27021"
-        entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all"]  
         volumes:
-          - mongodata1:/data/db
-          - ./rs-init.sh:/scripts/rs-init.sh
+          - ./data/db:/data/db
         networks:
           - app-network
-    mongo2:
-        image: mongo:latest
-        restart: unless-stopped
-        container_name: mongo2
-        env_file: .env
-        environment:
-          - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-          - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-        command: --port 27021
-        ports:
-          - 27023:27021
-        expose:
-          - "27021"
-        entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all"]  
-        volumes:
-          - mongodata2:/data/db
-        networks:
-          - app-network
-
-volumes:
-    mongodata1:
-    mongodata2:
-
 networks:
   app-network:
     driver: bridge

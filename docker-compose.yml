@@ -49,41 +49,40 @@ services:
         networks:
             - app-network
     
-    mongo1:
+    mongo_one:
         image: mongo:latest
+        command: mongod --replSet my-mongo-set
         restart: unless-stopped
         container_name: mongo1
         env_file: .env
         environment:
           - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
           - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-        command: --port 27021
         ports:
-          - 27024:27021
+          - 30001:27021
         expose:
-          - "27021"
-        entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all"]  
+          - "27021"  
         volumes:
           - mongodata1:/data/db
           - ./rs-init.sh:/scripts/rs-init.sh
         networks:
           - app-network
-    mongo2:
+    mongo_two:
         image: mongo:latest
+        command: mongod --replSet my-mongo-set
         restart: unless-stopped
         container_name: mongo2
         env_file: .env
         environment:
           - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
           - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-        command: --port 27021
         ports:
-          - 27023:27021
+          - 30002:27021
         expose:
-          - "27021"
-        entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all"]  
+          - "27021"  
         volumes:
-          - mongodata2:/data/db
+          - mongodata1:/data/db
+          - ./rs-init.sh:/scripts/rs-init.sh
         networks:
           - app-network
 

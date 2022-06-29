@@ -90,19 +90,16 @@ services:
         command: mongod --replSet my-mongo-set
         container_name: mongo1
         ports:
-          - 30001:27021  
-        volumes:
-          - mongodata1:/data/db
+          - 30001:27021
         networks:
           - app-network
+
     mongo_two:
         image: mongo
         command: mongod --replSet my-mongo-set
         container_name: mongo2
         ports:
-          - 30002:27021  
-        volumes:
-          - mongodata1:/data/db
+          - 30002:27021
         networks:
           - app-network
 
@@ -112,4 +109,3 @@ volumes:
 
 networks:
   app-network:
-    driver: bridge

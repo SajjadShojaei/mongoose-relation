@@ -1,88 +1,108 @@
 version: '3.8'
 services:
-    app:
-        container_name: nestjs_api_mongodb_sample_dev
-        image: nestjs_api_mongodb_sample_dev:1.0.14
-        build:
-            context: .
-            target: development
-            dockerfile: Dockerfile
-        env_file: .env
-        ports:
-            - "7000:7000"
-        volumes:
-            - .:/app
-        restart: unless-stopped
-        depends_on:
-            - mongo_one
-            - mongo_two
-        environment:
-            - MONGO_USERNAME=$MONGO_USERNAME
-            - MONGO_PASSWORD=$MONGO_PASSWORD
-            - MONGO_HOSTNAME=mongo1
-            - MONGO_PORT=$MONGO_PORT
-            - MONGO_DB=$MONGO_DB
-        networks:
-            - app-network
-    prod:
-        container_name: nestjs_api_mongodb_sample_prod
-        image: nestjs_api_mongodb_sample_prod:1.0.14
-        build:
-            context: .
-            target: production
-            dockerfile: Dockerfile
-        env_file: .env
-        ports:
-            - "7000:7000"
-        volumes:
-            - .:/app
-        restart: unless-stopped
-        depends_on:
-            - mongo_one
-            - mongo_two
-        environment:
-            - MONGO_USERNAME=$MONGO_USERNAME
-            - MONGO_PASSWORD=$MONGO_PASSWORD
-            - MONGO_HOSTNAME=mongo1
-            - MONGO_PORT=$MONGO_PORT
-            - MONGO_DB=$MONGO_DB
-        networks:
-            - app-network
+    # app:
+    #     container_name: nestjs_api_mongodb_sample_dev
+    #     image: nestjs_api_mongodb_sample_dev:1.0.14
+    #     build:
+    #         context: .
+    #         target: development
+    #         dockerfile: Dockerfile
+    #     env_file: .env
+    #     ports:
+    #         - "7000:7000"
+    #     volumes:
+    #         - .:/app
+    #     restart: unless-stopped
+    #     depends_on:
+    #         - mongo_one
+    #         - mongo_two
+    #     environment:
+    #         - MONGO_USERNAME=$MONGO_USERNAME
+    #         - MONGO_PASSWORD=$MONGO_PASSWORD
+    #         - MONGO_HOSTNAME=mongo1
+    #         - MONGO_PORT=$MONGO_PORT
+    #         - MONGO_DB=$MONGO_DB
+    #     networks:
+    #         - app-network
+    # prod:
+    #     container_name: nestjs_api_mongodb_sample_prod
+    #     image: nestjs_api_mongodb_sample_prod:1.0.14
+    #     build:
+    #         context: .
+    #         target: production
+    #         dockerfile: Dockerfile
+    #     env_file: .env
+    #     ports:
+    #         - "7000:7000"
+    #     volumes:
+    #         - .:/app
+    #     restart: unless-stopped
+    #     depends_on:
+    #         - mongo_one
+    #         - mongo_two
+    #     environment:
+    #         - MONGO_USERNAME=$MONGO_USERNAME
+    #         - MONGO_PASSWORD=$MONGO_PASSWORD
+    #         - MONGO_HOSTNAME=mongo1
+    #         - MONGO_PORT=$MONGO_PORT
+    #         - MONGO_DB=$MONGO_DB
+    #     networks:
+    #         - app-network
     
+    # mongo_one:
+    #     image: mongo:latest
+    #     command: mongod --replSet my-mongo-set
+    #     restart: unless-stopped
+    #     container_name: mongo1
+    #     env_file: .env
+    #     environment:
+    #       - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+    #       - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    #     ports:
+    #       - 30001:27021
+    #     expose:
+    #       - "27021"  
+    #     volumes:
+    #       - mongodata1:/data/db
+    #       - ./rs-init.sh:/scripts/rs-init.sh
+    #     networks:
+    #       - app-network
+    # mongo_two:
+    #     image: mongo:latest
+    #     command: mongod --replSet my-mongo-set
+    #     restart: unless-stopped
+    #     container_name: mongo2
+    #     env_file: .env
+    #     environment:
+    #       - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+    #       - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    #     ports:
+    #       - 30002:27021
+    #     expose:
+    #       - "27021"  
+    #     volumes:
+    #       - mongodata1:/data/db
+    #       - ./rs-init.sh:/scripts/rs-init.sh
+    #     networks:
+    #       - app-network
     mongo_one:
-        image: mongo:latest
+        image: mongo
         command: mongod --replSet my-mongo-set
-        restart: unless-stopped
         container_name: mongo1
-        env_file: .env
-        environment:
-          - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-          - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
         ports:
-          - 30001:27021
-        expose:
-          - "27021"  
+          - 30001:27021  
         volumes:
           - mongodata1:/data/db
-          - ./rs-init.sh:/scripts/rs-init.sh
         networks:
           - app-network
     mongo_two:
-        image: mongo:latest
+        image: mongo
         command: mongod --replSet my-mongo-set
-        restart: unless-stopped
         container_name: mongo2
-        env_file: .env
-        environment:
-          - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
-          - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
         ports:
-          - 30002:27021
-        expose:
-          - "27021"  
+          - 30002:27021  
         volumes:
           - mongodata1:/data/db
-          - ./rs-init.sh:/scripts/rs-init.sh
         networks:
           - app-network
 

@@ -90,7 +90,7 @@ services:
         command: mongod --replSet my-mongo-set
         container_name: mongo1
         ports:
-          - 30001:27021
+          - 30001:27017
         networks:
           - app-network
 
@@ -99,7 +99,7 @@ services:
         command: mongod --replSet my-mongo-set
         container_name: mongo2
         ports:
-          - 30002:27021
+          - 30002:27017
         networks:
           - app-network
 
